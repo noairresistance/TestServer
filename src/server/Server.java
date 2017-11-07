@@ -187,6 +187,11 @@ public class Server
                         // read an arraylist of drinks
                         // relay the lis to the waiter
                     }
+                    else if(Request.startsWith("Paid"))
+                    {
+                        WaiterOutObjs[AssignedWaiter].writeUTF(Request);
+                        WaiterOutObjs[AssignedWaiter].flush();
+                    }
                 }
                 TableOutObjs[TableNumber] = null;
                 TableInObjs[TableNumber] = null;
