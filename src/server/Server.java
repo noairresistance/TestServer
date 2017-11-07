@@ -9,7 +9,7 @@ import java.util.Scanner;
 
 import allclasses.Food;
 import allclasses.RestaurantItem;
-import allclasses.OrderList;
+import allclasses.Order;
 
 public class Server
 {
@@ -125,7 +125,7 @@ public class Server
         ObjectInputStream ObjIn; // the input stream 
         int AssignedWaiter; // the assigned waiter
         Socket TableSkt = null; // the table's socket
-        OrderList Order; // and order belonging to the table, holds restaurant items and drinks
+        Order Order; // and order belonging to the table, holds restaurant items and drinks
                 
         public TableThread(int num, ObjectOutputStream out, ObjectInputStream in, Socket Skt)
         {
@@ -160,7 +160,7 @@ public class Server
                         System.out.println("getting order"); // test
                         
                         // prepare the waiter to recieve the order
-                        OrderList tempOrder = (OrderList)ObjIn.readObject();
+                        Order tempOrder = (Order)ObjIn.readObject();
                         WaiterOutObjs[AssignedWaiter].writeUTF("Placed");
                         WaiterOutObjs[AssignedWaiter].flush();
                         
@@ -203,7 +203,7 @@ public class Server
         ObjectInputStream ObjIn = null;
         Socket WaiterSkt = null;
         int WaiterID = -1;
-        OrderList tempOrder = null; // a temporary orderlist object used when a waiter modifies a table's order
+        Order tempOrder = null; // a temporary orderlist object used when a waiter modifies a table's order
         
         public WaiterThread(int id, ObjectInputStream in, ObjectOutputStream out, Socket Skt)
         {
@@ -229,7 +229,7 @@ public class Server
                         String[] RequestTokens = Request.split("@");
                         int i = (Integer.parseInt(RequestTokens[1]))-1;
                         
-                        OrderList tempOrder = (OrderList)ObjIn.readObject();
+                        Order tempOrder = (Order)ObjIn.readObject();
                         
                         // send a message to prepare the 
                         TableOutObjs[i].writeUTF(RequestTokens[0]);
