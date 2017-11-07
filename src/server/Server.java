@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.PriorityQueue;
 import java.util.Scanner;
 
-import allclasses.Food;
+import allclasses.*;
 import allclasses.RestaurantItem;
 import allclasses.Order;
 
@@ -21,6 +21,8 @@ public class Server
     private ObjectInputStream[] WaiterInObjs;
     private ObjectInputStream KitchenInObjs = null;
    
+    private ServerSentMasterList SentMenu = null;
+    private MasterFoodItemList Menu = null;
     private int WaiterCount = 0;
     private PriorityQueue<Integer> Waiters = null;
     private boolean shutdown = false;
@@ -143,6 +145,10 @@ public class Server
             
             try
             {
+                System.out.println("Sending menu");
+                ObjOut.writeObject(SentMenu);
+                ObjOut.flush();
+                
                 while((Request = ObjIn.readUTF()) != null)
                 {
                     System.out.println(Request); // test
@@ -262,9 +268,21 @@ public class Server
         }
     }
     
+    public void buildMenu()
+    {
+         DrinksList drinks = new DrinksList();
+         AppitizersList apps = new AppitizersList();
+         EntreeList Entrees = new EntreeList();
+         DessertsList Desserts = new DessertsList();
+         
+         SentMenu = new ServerSentMasterList(drinks.drinks, apps.appitizers, Entrees.entrees, Desserts.desserts);
+         //Menu = new MasterFoodItemList(SentMenu.totalList);
+    }
+    
     public static void main(String argv[])
     {
         Server server = new Server();
+        server.buildMenu();
         System.out.println("starting server.");
         server.launch();
     }
