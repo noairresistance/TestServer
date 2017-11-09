@@ -8,8 +8,7 @@ import java.util.PriorityQueue;
 import java.util.Scanner;
 
 import allclasses.*;
-import allclasses.RestaurantItem;
-import allclasses.Order;
+import java.util.Queue;
 
 public class Server
 {
@@ -21,15 +20,14 @@ public class Server
     private ObjectInputStream[] WaiterInObjs;
     private ObjectInputStream KitchenInObjs = null;
    
-    private ServerSentMasterList SentMenu = null;
-    private MasterFoodItemList Menu = null;
+    private FullMenu menu = null;
     private int WaiterCount = 0;
-    private PriorityQueue<Integer> Waiters = null;
+    private Queue<Integer> Waiters = null;
     private boolean shutdown = false;
        
     public Server()
     {
-        Waiters = new PriorityQueue();
+        //Waiters = new Queue();
         // empty constructor
     }
     
@@ -146,7 +144,7 @@ public class Server
             try
             {
                 System.out.println("Sending menu");
-                ObjOut.writeObject(SentMenu);
+                ObjOut.writeObject(menu);
                 ObjOut.flush();
                 
                 while((Request = ObjIn.readUTF()) != null)
@@ -272,22 +270,113 @@ public class Server
             }
         }
     }
+    public FoodList buildDrinks()
+    {
+        FoodList tempDrinks = new FoodList();
+        
+        Food drink1 = new Food("Coke", "Drink",1.99, Boolean.TRUE, Boolean.FALSE);
+        Food drink2 = new Food("Sprite", "Drink",2.99, Boolean.TRUE, Boolean.FALSE);
+        Food drink3 = new Food("Pepsi", "Drink",3.99, Boolean.TRUE, Boolean.FALSE);
+        
+        tempDrinks.addItem(drink1);
+        tempDrinks.addItem(drink2);
+        tempDrinks.addItem(drink3);
+        
+        return tempDrinks;
+    }
+    
+    public FoodList buildApps()
+    {
+        FoodList tempApps = new FoodList();
+        
+        Food appitizer1 = new Food("Buffalo Wings", "Food",5.99, Boolean.TRUE, Boolean.FALSE);
+        appitizer1.SetDescription("Some pretty good buffalo wings\n");
+        
+        Food appitizer2 = new Food("Fried Pickles", "Food",6.99, Boolean.TRUE, Boolean.FALSE);
+        appitizer2.SetDescription("I mean, cmon.\n");
+        
+        Food appitizer3 = new Food("French fries", "Food",7.99, Boolean.TRUE, Boolean.FALSE);
+        appitizer3.SetDescription("I have no clue\n");
+        
+        tempApps.addItem(appitizer1);
+        tempApps.addItem(appitizer2);
+        tempApps.addItem(appitizer3);
+        
+        return tempApps;
+    }
+    
+    public FoodList buildEntrees()
+    {
+        FoodList tempEntrees = new FoodList();
+        
+        Food entree1 = new Food("Burger1", "Food",9.99, Boolean.TRUE, Boolean.FALSE);
+        entree1.SetDescription("Heart-Stopping, All-American Cheese Burger with an extra large side of Freedom");
+        entree1.SetIngredients("1/2 LB Patty");
+        entree1.SetIngredients("Cheddar Cheese");
+        entree1.SetIngredients("Lettuce");
+        entree1.SetIngredients("Pickles");
+        entree1.SetIngredients("Onion");
+        entree1.SetIngredients("Mayo");
+        
+        Food entree2 = new Food("Burger2", "Food",10.99, Boolean.TRUE, Boolean.FALSE);
+        entree2.SetDescription("Bla bla blablablablablablablablala abala ablabab abl");
+        entree2.SetIngredients("Bla bla bla");
+        entree2.SetIngredients("Ndikin");
+        entree2.SetIngredients("Jeignbkd");
+        entree2.SetIngredients("Goenfksl");
+        entree2.SetIngredients("Nei");
+        entree2.SetIngredients("Mkenbd");
+        
+        Food entree3 = new Food("Burger3", "Food",12.99, Boolean.TRUE, Boolean.FALSE);
+        entree3.SetDescription("Nfkdh dksoih rxkcn dofb skfn voish dkdn foksn dlks ksn fkn kfn dokhl skdhlkj");
+        entree3.SetIngredients("Udncosn");
+        entree3.SetIngredients("Kdiojh ");
+        entree3.SetIngredients("Ueijddl");
+        entree3.SetIngredients("Pondks");
+        entree3.SetIngredients("Mikuebnd");
+        
+        tempEntrees.addItem(entree1);
+        tempEntrees.addItem(entree2);
+        tempEntrees.addItem(entree3);
+        
+        return tempEntrees;
+    }
+    
+    public FoodList buildDesserts()
+    {
+        FoodList tempDesserts = new FoodList();
+        
+        Food dessert1 = new Food("Cake", "Food",7.99, Boolean.TRUE, Boolean.FALSE);
+        Food dessert2 = new Food("Ice Cream", "Food",8.99, Boolean.TRUE, Boolean.FALSE);
+        Food dessert3 = new Food("Cake and Ice Cream", "Food",9.99, Boolean.TRUE, Boolean.FALSE);
+        
+        tempDesserts.addItem(dessert1);
+        tempDesserts.addItem(dessert2);
+        tempDesserts.addItem(dessert3);
+        
+        return tempDesserts;
+    }
     
     public void buildMenu()
     {
-         DrinksList drinks = new DrinksList();
-         AppitizersList apps = new AppitizersList();
-         EntreeList Entrees = new EntreeList();
-         DessertsList Desserts = new DessertsList();
-         
-         SentMenu = new ServerSentMasterList(drinks.drinks, apps.appitizers, Entrees.entrees, Desserts.desserts);
-         //Menu = new MasterFoodItemList(SentMenu.totalList);
+        FoodList Drinks = buildDrinks();
+        FoodList Entrees = buildEntrees();
+        FoodList Desserts = buildDesserts();
+        FoodList Appetizers = buildApps();
+        
+        menu = new FullMenu(Entrees, Appetizers, Drinks, Desserts);        
     }
     
+    public void printMenu()
+    {
+        menu.printMenu();
+    }
+            
     public static void main(String argv[])
     {
         Server server = new Server();
         server.buildMenu();
+        server.printMenu();
         System.out.println("starting server.");
         server.launch();
     }
