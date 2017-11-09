@@ -21,7 +21,7 @@ public class Server
     private ObjectInputStream[] WaiterInObjs;
     private ObjectInputStream KitchenInObjs = null;
    
-    private ServerSentMasterList SentMenu = null;
+    public ServerSentMasterList SentMenu = null;
     private MasterFoodItemList Menu = null;
     private int WaiterCount = 0;
     private PriorityQueue<Integer> Waiters = null;
@@ -146,7 +146,9 @@ public class Server
             try
             {
                 System.out.println("Sending menu");
+                
                 ObjOut.writeObject(SentMenu);
+                
                 ObjOut.flush();
                 
                 while((Request = ObjIn.readUTF()) != null)
@@ -288,6 +290,7 @@ public class Server
     {
         Server server = new Server();
         server.buildMenu();
+        
         System.out.println("starting server.");
         server.launch();
     }
