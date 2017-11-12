@@ -44,7 +44,13 @@ public class Server
         public void run()
         {
             System.out.println("insided handshake thread.");
-            
+            for (int i = 0; i < Menu.drinks.size(); i++)
+                {
+                    System.out.println(Menu.drinks.get(i).GetName());
+                }
+                System.out.println();
+
+     
             TableOutObjs = new ObjectOutputStream[16];
             WaiterOutObjs = new ObjectOutputStream[2];
             TableInObjs = new ObjectInputStream[16];
@@ -149,6 +155,7 @@ public class Server
             
             try
             {
+                
                 System.out.println("Sending menu");
                 
                 ObjOut.writeObject(SentMenu);
@@ -294,6 +301,8 @@ public class Server
     {
         Server server = new Server();
         server.buildMenu();
+        
+        
         
         System.out.println("starting server.");
         server.launch();

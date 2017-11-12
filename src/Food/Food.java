@@ -13,7 +13,7 @@ public class Food extends RestaurantItem
     private ArrayList<String> Ingredients;
     private String itemCatagory;
      
-    public Food (String Name, String Type, String itemCatagory, Double Price,Boolean IsAvailable, Boolean Status)
+    public Food (String Name, String Type, String itemCatagory, Double Price, Boolean IsAvailable, Boolean Status)
     {
         super (Name, Type, Price, IsAvailable );
         IsSpecial = Status;
