@@ -44,9 +44,10 @@ public class Server
         public void run()
         {
             System.out.println("insided handshake thread.");
-            for (int i = 0; i < Menu.drinks.size(); i++)
+
+            for (int i = 0; i < SentMenu.totalList.get(0).size(); i++)
                 {
-                    System.out.println(Menu.drinks.get(i).GetName());
+                    System.out.println(SentMenu.totalList.get(0).get(i).getItemCatagory());
                 }
                 System.out.println();
 
