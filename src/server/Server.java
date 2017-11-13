@@ -8,6 +8,7 @@ import java.util.PriorityQueue;
 import java.util.Scanner;
 
 import allclasses.*;
+import java.util.LinkedList;
 import java.util.Queue;
 
 public class Server
@@ -15,20 +16,19 @@ public class Server
     private ServerSocket ServerSkt = null;
     private ObjectOutputStream[] TableOutObjs;
     private ObjectOutputStream[] WaiterOutObjs;
-    private ObjectOutputStream KitchenOutObjs = null;
+    private ObjectOutputStream KitchenOutObj = null;
     private ObjectInputStream[] TableInObjs;
     private ObjectInputStream[] WaiterInObjs;
-    private ObjectInputStream KitchenInObjs = null;
+    private ObjectInputStream KitchenInObj = null;
    
     private FullMenu menu = null;
     private int WaiterCount = 0;
-    private Queue<Integer> Waiters = null;
+    private Queue<Integer> Waiters;
     private boolean shutdown = false;
        
     public Server()
     {
-        //Waiters = new Queue();
-        // empty constructor
+        Waiters = new LinkedList<Integer>();
     }
     
     // this is the thread that accepts connections 
@@ -86,16 +86,32 @@ public class Server
                             System.out.println("Cannot accept more waiters.");
                         }
                         else
-                        { 
+                        {
+                                                    System.out.println("test1");
                             WaiterOutObjs[WaiterCount] = clientObjOut;
+                            System.out.println("test2");
                             WaiterInObjs[WaiterCount] = clientObjIn;
+                            System.out.println("test3");
                             Waiters.add(WaiterCount);
+                            System.out.println("test4");
                             
                             //launch waiter thread
                             Thread Waiter = new Thread(new WaiterThread(WaiterCount,clientObjIn, clientObjOut, newConnection));
                             Waiter.start();
                             WaiterCount++;
                         }
+                    }
+                    else if(InitMessage.equals("Kitchen"))
+                    {
+                        KitchenOutObj = clientObjOut;
+                        KitchenInObj = clientObjIn;
+                        
+                        Thread Kitchen = new Thread(new KitchenThread(clientObjIn, clientObjOut, newConnection));
+                        Kitchen.start();
+                    }
+                    else
+                    {
+                        System.out.println("Could not determine the type of connection");
                     }
                 }
                 
@@ -171,6 +187,12 @@ public class Server
                         // read an orderlist object from the table
                         WaiterOutObjs[AssignedWaiter].writeObject(tempOrder);
                         WaiterOutObjs[AssignedWaiter].flush();
+                        
+                        KitchenOutObj.writeUTF("Placed");
+                        KitchenOutObj.flush();
+                        
+                        KitchenOutObj.writeObject(tempOrder);
+                        KitchenOutObj.flush();
                     }
                     else if(Request.startsWith("Help"))
                     {
@@ -270,6 +292,48 @@ public class Server
             }
         }
     }
+    
+    public class KitchenThread implements Runnable
+    {
+        ObjectInputStream ObjIn;
+        ObjectOutputStream ObjOut;
+        Socket KitchenSkt;
+        
+        public KitchenThread(ObjectInputStream in, ObjectOutputStream out, Socket skt)
+        {
+            ObjIn = in;
+            ObjOut = out;
+            KitchenSkt = skt;
+        }
+        
+        
+        public void run()
+        {
+            String Request;
+            
+            try
+            {
+                while((Request = ObjIn.readUTF()) != null)
+                {
+                    // if the kitchen requests a waiter
+                    if(Request.equals("Request"))
+                    {
+                        
+                    }
+                    // else if the an order is done
+                    else if(Request.equals("Done"))
+                    {
+                        
+                    }
+                }
+            }
+            catch(Exception e)
+            {
+                System.out.println("Error connection to the kitchen." + e);
+            }
+        }
+    }
+    
     public FoodList buildDrinks()
     {
         FoodList tempDrinks = new FoodList();
