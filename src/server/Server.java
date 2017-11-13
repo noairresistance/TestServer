@@ -44,14 +44,7 @@ public class Server
         public void run()
         {
             System.out.println("insided handshake thread.");
-
-            for (int i = 0; i < SentMenu.totalList.get(0).size(); i++)
-                {
-                    System.out.println(SentMenu.totalList.get(0).get(i).getItemCatagory());
-                }
-                System.out.println();
-
-     
+            
             TableOutObjs = new ObjectOutputStream[16];
             WaiterOutObjs = new ObjectOutputStream[2];
             TableInObjs = new ObjectInputStream[16];
