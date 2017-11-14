@@ -82,6 +82,11 @@ public class Order implements Serializable
     {
         return foodItem;
     }
+    
+    public ArrayList<Food> getDrinkItem()
+    {
+        return drink;
+    }
 
     public void setDrinkItem(Food drink)
     {
