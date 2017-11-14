@@ -14,26 +14,30 @@ import allclasses.Order;
 */
 
 import Food.*;
+import java.util.LinkedList;
+import java.util.Queue;
 
 public class Server
 {
     private ServerSocket ServerSkt = null;
     private ObjectOutputStream[] TableOutObjs;
     private ObjectOutputStream[] WaiterOutObjs;
-    private ObjectOutputStream KitchenOutObjs = null;
+    private ObjectOutputStream KitchenOutObj = null;
     private ObjectInputStream[] TableInObjs;
     private ObjectInputStream[] WaiterInObjs;
-    private ObjectInputStream KitchenInObjs = null;
+    private ObjectInputStream KitchenInObj = null;
    
     public ServerSentMasterList SentMenu = null;
     private MasterFoodItemList Menu = null;
     private int WaiterCount = 0;
-    private PriorityQueue<Integer> Waiters = null;
+//    private PriorityQueue<Integer> Waiters = null;
+    private Queue<Integer> Waiters;
     private boolean shutdown = false;
        
     public Server()
     {
-        Waiters = new PriorityQueue();
+        Waiters = new LinkedList<Integer>();
+//        Waiters = new PriorityQueue();
         // empty constructor
     }
     
@@ -92,16 +96,32 @@ public class Server
                             System.out.println("Cannot accept more waiters.");
                         }
                         else
-                        { 
+                        {
+                                                    System.out.println("test1");
                             WaiterOutObjs[WaiterCount] = clientObjOut;
+                            System.out.println("test2");
                             WaiterInObjs[WaiterCount] = clientObjIn;
+                            System.out.println("test3");
                             Waiters.add(WaiterCount);
+                            System.out.println("test4");
                             
                             //launch waiter thread
                             Thread Waiter = new Thread(new WaiterThread(WaiterCount,clientObjIn, clientObjOut, newConnection));
                             Waiter.start();
                             WaiterCount++;
                         }
+                    }
+/*                    else if(InitMessage.equals("Kitchen"))
+                    {
+                        KitchenOutObj = clientObjOut;
+                        KitchenInObj = clientObjIn;
+                        
+                        Thread Kitchen = new Thread(new KitchenThread(clientObjIn, clientObjOut, newConnection));
+                        Kitchen.start();
+                    }*/
+                    else
+                    {
+                        System.out.println("Could not determine the type of connection");
                     }
                 }
                 
@@ -174,12 +194,19 @@ public class Server
                         
                         // prepare the waiter to recieve the order
                         Order tempOrder = (Order)ObjIn.readObject();
+                        System.out.println("test 3"); // test
                         WaiterOutObjs[AssignedWaiter].writeUTF("Placed");
                         WaiterOutObjs[AssignedWaiter].flush();
                         
                         // read an orderlist object from the table
                         WaiterOutObjs[AssignedWaiter].writeObject(tempOrder);
                         WaiterOutObjs[AssignedWaiter].flush();
+                        
+                        /*KitchenOutObj.writeUTF("Placed");
+                        KitchenOutObj.flush();
+                        
+                        KitchenOutObj.writeObject(tempOrder);
+                        KitchenOutObj.flush();*/
                     }
                     else if(Request.startsWith("Help"))
                     {
