@@ -218,8 +218,12 @@ public class Server
                     }
                     else if(Request.equals("Refill"))
                     {
-                        // read an arraylist of drinks
-                        // relay the lis to the waiter
+                        String refill = ObjIn.readUTF();
+                        WaiterOutObjs[AssignedWaiter].writeUTF("Refill");
+                        WaiterOutObjs[AssignedWaiter].flush();
+                        
+                        WaiterOutObjs[AssignedWaiter].writeUTF(refill);
+                        WaiterOutObjs[AssignedWaiter].flush();
                     }
                     else if(Request.startsWith("Paid"))
                     {
