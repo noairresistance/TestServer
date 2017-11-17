@@ -208,13 +208,15 @@ public class Server
                         KitchenOutObj.writeObject(tempOrder);
                         KitchenOutObj.flush();*/
                     }
-                    else if(Request.startsWith("Help"))
+                    //else if(Request.startsWith("Help"))
+                    else if(Request.equals("Help"))
                     {
-                        WaiterOutObjs[AssignedWaiter].writeUTF(Request);
+                        String help = ObjIn.readUTF();
+                        WaiterOutObjs[AssignedWaiter].writeUTF("Help");
                         WaiterOutObjs[AssignedWaiter].flush();
-                        //ObjOut.writeUTF("Shutdown"); // test
-                        //ObjOut.flush(); //test
-                        //break; // test
+                        
+                        WaiterOutObjs[AssignedWaiter].writeUTF(help);
+                        WaiterOutObjs[AssignedWaiter].flush();
                     }
                     else if(Request.equals("Refill"))
                     {
