@@ -22,7 +22,7 @@ public class DrinksList
         drinks = new ArrayList<>();
         
         drink1 = new Food("Coke", "Drink", "drink", 1.99, Boolean.TRUE, Boolean.FALSE);
-        drink2 = new Food("Sprite", "Drink", "drink", 2.99, Boolean.TRUE, Boolean.FALSE);
+        drink2 = new Food("Sprite", "Drink", "drink", 2.99, Boolean.TRUE, Boolean.TRUE);
         drink3 = new Food("Pepsi", "Drink", "drink", 3.99, Boolean.TRUE, Boolean.FALSE);
         
         drinks.add(drink1);

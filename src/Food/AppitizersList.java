@@ -26,7 +26,7 @@ public class AppitizersList
         appitizer1.SetDescription("Some pretty good buffalo wings\n");
         
         
-        appitizer2 = new Food("Fried Pickles", "Food", "appetizer",6.99, Boolean.TRUE, Boolean.FALSE);
+        appitizer2 = new Food("Fried Pickles", "Food", "appetizer",6.99, Boolean.TRUE, Boolean.TRUE);
         appitizer2.SetDescription("I mean, cmon.\n");
         
         

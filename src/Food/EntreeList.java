@@ -31,7 +31,7 @@ public class EntreeList
         entree1.SetIngredients("Onion");
         entree1.SetIngredients("Mayo");
         
-        entree2 = new Food("Burger2", "Food", "entree", 10.99, Boolean.TRUE, Boolean.FALSE);
+        entree2 = new Food("Burger2", "Food", "entree", 10.99, Boolean.TRUE, Boolean.TRUE);
         entree2.SetDescription("Bla bla blablablablablablablablala abala ablabab abl");
         entree2.SetIngredients("Bla bla bla");
         entree2.SetIngredients("Ndikin");

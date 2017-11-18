@@ -332,9 +332,41 @@ public class Server
          EntreeList Entrees = new EntreeList();
          DessertsList Desserts = new DessertsList();
          MerchandiseList Merchandise = new MerchandiseList();
+         SpecialsList Specials = new SpecialsList();
          
-         SentMenu = new ServerSentMasterList(drinks.drinks, apps.appitizers, Entrees.entrees, Desserts.desserts, Merchandise.merchandise);
+         //building specials 
+         for (int i = 0; i < 2; i++)
+         {
+             if(drinks.drinks.get(i).GetIsSpecial() == Boolean.TRUE)
+             {
+                 Specials.addItem(drinks.drinks.get(i));
+             }
+             if(apps.appitizers.get(i).GetIsSpecial() == Boolean.TRUE)
+             {
+                 Specials.addItem(apps.appitizers.get(i));
+             }
+             if(Entrees.entrees.get(i).GetIsSpecial() == Boolean.TRUE)
+             {
+                 Specials.addItem(Entrees.entrees.get(i));
+             }
+             if(Desserts.desserts.get(i).GetIsSpecial() == Boolean.TRUE)
+             {
+                 Specials.addItem(Desserts.desserts.get(i));
+             }
+         }
+         
+         
+         SentMenu = new ServerSentMasterList(drinks.drinks, apps.appitizers, Entrees.entrees, Desserts.desserts, Merchandise.merchandise, Specials.specials);
          //Menu = new MasterFoodItemList(SentMenu.totalList);
+         
+         //This was used to test that the correct items were added to the Special's List.
+         System.out.println("ListSize " + Specials.getListSize());
+         System.out.println(Specials.getItem(0).GetName());
+         System.out.println(Specials.getItem(1).GetName());
+         System.out.println(Specials.getItem(2).GetName());
+         System.out.println(Specials.getItem(3).GetName());
+         
+         
     }
     
     public static void main(String argv[])
