@@ -16,6 +16,8 @@ public class Order implements Serializable
     private int orderNumber;
     private ArrayList<Food> foodItem;
     private ArrayList<Food> drink;
+    private ArrayList<Food> special; //needs to be implemented.
+    private ArrayList<Food> merch;  //newest implementation.
     private double totalPrice;
     private double subTotal;
     private double tax;
@@ -30,6 +32,7 @@ public class Order implements Serializable
         subTotal = 0;
         foodItem = new ArrayList<Food>();
         drink = new ArrayList<Food>();
+        merch = new ArrayList<Food>();
     }
     
     
@@ -47,6 +50,10 @@ public class Order implements Serializable
         for(Food food : drink)
         {
             temp += food.GetPrice();
+        }
+        for(Food merch : merch) //added for merch
+        {
+            temp += merch.GetPrice();
         }
         
         subTotal += temp;
@@ -82,7 +89,7 @@ public class Order implements Serializable
     {
         return foodItem;
     }
-    
+     
     public ArrayList<Food> getDrinkItem()
     {
         return drink;
@@ -92,8 +99,22 @@ public class Order implements Serializable
     {
         this.drink.add(drink);
     }
+/*  //not needed anymore
+    public ArrayList<Merch> getMerch()
+    {
+        return merch;
+    }
     
-
+    public void addToMerch(Merch newItem)
+    {
+        merch.add(newItem);
+    }
+    
+    public void setMerchItem (Merch newItem)
+    {
+        this.merch.add(newItem);
+    }
+*/
     public void setFoodItem(Food foodItem)
     {
         this.foodItem.add(foodItem);

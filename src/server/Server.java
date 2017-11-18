@@ -232,6 +232,11 @@ public class Server
                         WaiterOutObjs[AssignedWaiter].writeUTF(Request);
                         WaiterOutObjs[AssignedWaiter].flush();
                     }
+                    else if(Request.startsWith("ToGoBox"))
+                    {
+                        WaiterOutObjs[AssignedWaiter].writeUTF(Request);
+                        WaiterOutObjs[AssignedWaiter].flush();
+                    }
                 }
                 TableOutObjs[TableNumber] = null;
                 TableInObjs[TableNumber] = null;
@@ -319,8 +324,9 @@ public class Server
          AppitizersList apps = new AppitizersList();
          EntreeList Entrees = new EntreeList();
          DessertsList Desserts = new DessertsList();
+         MerchandiseList Merchandise = new MerchandiseList();
          
-         SentMenu = new ServerSentMasterList(drinks.drinks, apps.appitizers, Entrees.entrees, Desserts.desserts);
+         SentMenu = new ServerSentMasterList(drinks.drinks, apps.appitizers, Entrees.entrees, Desserts.desserts, Merchandise.merchandise);
          //Menu = new MasterFoodItemList(SentMenu.totalList);
     }
     
