@@ -239,7 +239,7 @@ public class Server
                         WaiterOutObjs[AssignedWaiter].flush();
                     }
                     
-                    else if(Request.startsWith("ToGoBox"))
+                    else if(Request.endsWith("box."))
                     {
                         WaiterOutObjs[AssignedWaiter].writeUTF(Request);
                         WaiterOutObjs[AssignedWaiter].flush();
