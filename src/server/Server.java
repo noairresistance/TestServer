@@ -97,7 +97,7 @@ public class Server
                         }
                         else
                         {
-                                                    System.out.println("test1");
+                            System.out.println("test1");
                             WaiterOutObjs[WaiterCount] = clientObjOut;
                             System.out.println("test2");
                             WaiterInObjs[WaiterCount] = clientObjIn;
@@ -360,12 +360,13 @@ public class Server
          //Menu = new MasterFoodItemList(SentMenu.totalList);
          
          //This was used to test that the correct items were added to the Special's List.
+         /*
          System.out.println("ListSize " + Specials.getListSize());
          System.out.println(Specials.getItem(0).GetName());
          System.out.println(Specials.getItem(1).GetName());
          System.out.println(Specials.getItem(2).GetName());
          System.out.println(Specials.getItem(3).GetName());
-         
+         */
          
     }
     
