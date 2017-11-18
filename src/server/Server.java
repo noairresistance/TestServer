@@ -227,11 +227,18 @@ public class Server
                         WaiterOutObjs[AssignedWaiter].writeUTF(refill);
                         WaiterOutObjs[AssignedWaiter].flush();
                     }
-                    else if(Request.startsWith("Paid"))
+                    else if(Request.endsWith("cash."))
                     {
                         WaiterOutObjs[AssignedWaiter].writeUTF(Request);
                         WaiterOutObjs[AssignedWaiter].flush();
                     }
+                    
+                    else if(Request.endsWith("card."))
+                    {
+                        WaiterOutObjs[AssignedWaiter].writeUTF(Request);
+                        WaiterOutObjs[AssignedWaiter].flush();
+                    }
+                    
                     else if(Request.startsWith("ToGoBox"))
                     {
                         WaiterOutObjs[AssignedWaiter].writeUTF(Request);
