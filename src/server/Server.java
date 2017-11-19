@@ -97,13 +97,9 @@ public class Server
                         }
                         else
                         {
-                            System.out.println("test1");
                             WaiterOutObjs[WaiterCount] = clientObjOut;
-                            System.out.println("test2");
                             WaiterInObjs[WaiterCount] = clientObjIn;
-                            System.out.println("test3");
                             Waiters.add(WaiterCount);
-                            System.out.println("test4");
                             
                             //launch waiter thread
                             Thread Waiter = new Thread(new WaiterThread(WaiterCount,clientObjIn, clientObjOut, newConnection));
@@ -111,14 +107,14 @@ public class Server
                             WaiterCount++;
                         }
                     }
-/*                    else if(InitMessage.equals("Kitchen"))
+                    else if(InitMessage.equals("Kitchen"))
                     {
                         KitchenOutObj = clientObjOut;
                         KitchenInObj = clientObjIn;
                         
                         Thread Kitchen = new Thread(new KitchenThread(clientObjIn, clientObjOut, newConnection));
                         Kitchen.start();
-                    }*/
+                    }
                     else
                     {
                         System.out.println("Could not determine the type of connection");
@@ -194,7 +190,9 @@ public class Server
                         
                         // prepare the waiter to recieve the order
                         Order tempOrder = (Order)ObjIn.readObject();
-                        System.out.println("test 3"); // test
+                        
+                        System.out.println(AssignedWaiter);
+                        tempOrder.setWaiter(AssignedWaiter);
                         WaiterOutObjs[AssignedWaiter].writeUTF("Placed");
                         WaiterOutObjs[AssignedWaiter].flush();
                         
@@ -202,11 +200,11 @@ public class Server
                         WaiterOutObjs[AssignedWaiter].writeObject(tempOrder);
                         WaiterOutObjs[AssignedWaiter].flush();
                         
-                        /*KitchenOutObj.writeUTF("Placed");
+                        KitchenOutObj.writeUTF("Placed");
                         KitchenOutObj.flush();
                         
                         KitchenOutObj.writeObject(tempOrder);
-                        KitchenOutObj.flush();*/
+                        KitchenOutObj.flush();
                     }
                     //else if(Request.startsWith("Help"))
                     else if(Request.equals("Help"))
@@ -321,6 +319,60 @@ public class Server
             catch(Exception e)
             {
                 System.out.println("Could not receive request from waiter."+e);
+            }
+        }
+    }
+    
+    public class KitchenThread implements Runnable
+    {
+        ObjectInputStream ObjIn;
+        ObjectOutputStream ObjOut;
+        Socket KitchenSkt;
+        
+        public KitchenThread(ObjectInputStream in, ObjectOutputStream out, Socket skt)
+        {
+            ObjIn = in;
+            ObjOut = out;
+            KitchenSkt = skt;
+        }
+        
+        
+        public void run()
+        {
+            String Request;
+            
+            try
+            {
+                while((Request = ObjIn.readUTF()) != null)
+                {
+                    // if the kitchen requests a waiter
+                    if(Request.equals("Waiter"))
+                    {
+                        int waiter = ObjIn.readInt();
+                        String message = ObjIn.readUTF();
+                        
+                        WaiterOutObjs[waiter].writeUTF("Waiter");
+                        WaiterOutObjs[waiter].flush();
+                        
+                        WaiterOutObjs[waiter].writeUTF(message);
+                        WaiterOutObjs[waiter].flush();
+                    }
+                    else if(Request.equals("Ready"))
+                    {
+                        int waiter = ObjIn.readInt();
+                        String message = ObjIn.readUTF();
+                        
+                        WaiterOutObjs[waiter].writeUTF("Ready");
+                        WaiterOutObjs[waiter].flush();
+                        
+                        WaiterOutObjs[waiter].writeUTF(message);
+                        WaiterOutObjs[waiter].flush();
+                    }
+                }
+            }
+            catch(Exception e)
+            {
+                System.out.println("Error connection to the kitchen." + e);
             }
         }
     }
