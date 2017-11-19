@@ -200,11 +200,11 @@ public class Server
                         WaiterOutObjs[AssignedWaiter].writeObject(tempOrder);
                         WaiterOutObjs[AssignedWaiter].flush();
                         
-                        KitchenOutObj.writeUTF("Placed");
+                        /*KitchenOutObj.writeUTF("Placed");
                         KitchenOutObj.flush();
                         
                         KitchenOutObj.writeObject(tempOrder);
-                        KitchenOutObj.flush();
+                        KitchenOutObj.flush();*/
                     }
                     //else if(Request.startsWith("Help"))
                     else if(Request.equals("Help"))
