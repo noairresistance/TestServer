@@ -205,6 +205,7 @@ public class Server
                         
                         KitchenOutObj.writeObject(tempOrder);
                         KitchenOutObj.flush();*/
+                        
                     }
                     //else if(Request.startsWith("Help"))
                     else if(Request.equals("Help"))
