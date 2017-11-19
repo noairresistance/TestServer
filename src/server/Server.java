@@ -225,21 +225,33 @@ public class Server
                         WaiterOutObjs[AssignedWaiter].writeUTF(refill);
                         WaiterOutObjs[AssignedWaiter].flush();
                     }
-                    else if(Request.endsWith("cash."))
+                    else if(Request.equals("Cash"))
                     {
-                        WaiterOutObjs[AssignedWaiter].writeUTF(Request);
+                        String cash = ObjIn.readUTF();
+                        WaiterOutObjs[AssignedWaiter].writeUTF("Cash");
+                        WaiterOutObjs[AssignedWaiter].flush();
+                        
+                        WaiterOutObjs[AssignedWaiter].writeUTF(cash);
                         WaiterOutObjs[AssignedWaiter].flush();
                     }
                     
-                    else if(Request.endsWith("card."))
+                    else if(Request.equals("Card"))
                     {
-                        WaiterOutObjs[AssignedWaiter].writeUTF(Request);
+                        String card = ObjIn.readUTF();
+                        WaiterOutObjs[AssignedWaiter].writeUTF("Card");
+                        WaiterOutObjs[AssignedWaiter].flush();
+                        
+                        WaiterOutObjs[AssignedWaiter].writeUTF(card);
                         WaiterOutObjs[AssignedWaiter].flush();
                     }
                     
-                    else if(Request.endsWith("box."))
+                    else if(Request.equals("togo"))
                     {
-                        WaiterOutObjs[AssignedWaiter].writeUTF(Request);
+                        String togo = ObjIn.readUTF();
+                        WaiterOutObjs[AssignedWaiter].writeUTF("togo");
+                        WaiterOutObjs[AssignedWaiter].flush();
+                        
+                        WaiterOutObjs[AssignedWaiter].writeUTF(togo);
                         WaiterOutObjs[AssignedWaiter].flush();
                     }
                 }
