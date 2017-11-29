@@ -182,6 +182,12 @@ public class Server
                         // pop number from queue, assign to table, and push back into the queue
                         AssignedWaiter = Waiters.remove();
                         Waiters.add(AssignedWaiter);
+                        
+                        ObjOut.writeUTF("Waiter");
+                        ObjOut.flush();
+                        
+                        ObjOut.writeInt(AssignedWaiter);
+                        ObjOut.flush();
                     }
                     
                     if(Request.equals("Send"))
