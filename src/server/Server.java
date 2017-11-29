@@ -254,6 +254,16 @@ public class Server
                         WaiterOutObjs[AssignedWaiter].writeUTF(togo);
                         WaiterOutObjs[AssignedWaiter].flush();
                     }
+                    else if(Request.equals("Free"))
+                    {
+                        System.out.println("here");
+                        String free = ObjIn.readUTF();
+                        WaiterOutObjs[AssignedWaiter].writeUTF("Free");
+                        WaiterOutObjs[AssignedWaiter].flush();
+                        
+                        WaiterOutObjs[AssignedWaiter].writeUTF(free);
+                        WaiterOutObjs[AssignedWaiter].flush();
+                    }
                 }
                 TableOutObjs[TableNumber] = null;
                 TableInObjs[TableNumber] = null;
