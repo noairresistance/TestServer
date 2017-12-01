@@ -10,6 +10,7 @@ import java.util.ArrayList;
 
 public class Order implements Serializable
 {
+
     private static int ID = 1;
     
     private int tableNumber;
@@ -18,11 +19,13 @@ public class Order implements Serializable
     private ArrayList<Food> foodItem;
     private ArrayList<Food> drink;
     private ArrayList<Food> special; //needs to be implemented.
-    private ArrayList<Food> merch;  //newest implementation.
+    private ArrayList<Food> merch;  //newest list.
     private double totalPrice;
     private double subTotal;
+    private double compedItemTotal;
     private double tax;
     private boolean hasAddedToOrder;
+    private ArrayList<CompedItem> compedItems;
 
     public Order()
     {
@@ -31,10 +34,118 @@ public class Order implements Serializable
         hasAddedToOrder = false;
         totalPrice = 0;
         subTotal = 0;
+        compedItemTotal = 0;
         foodItem = new ArrayList<Food>();
         drink = new ArrayList<Food>();
         merch = new ArrayList<Food>();
         special = new ArrayList<Food>();
+        compedItems = new ArrayList<CompedItem>();
+    }
+    
+    public class CompedItem
+    {
+        
+        
+        private String item;
+        private String amount;
+        private String waiterID;
+        private String reason;
+        private String dateTime;
+        
+        public CompedItem(String item, String amount, String waiterID, String reason, String dateTime)
+        {
+            this.item = item;
+            this.amount = amount;
+            this.waiterID = waiterID;
+            this.reason = reason;
+            this.dateTime = dateTime;
+        }        
+                
+        /**
+         * @return the item
+         */
+        public String getItem()
+        {
+            return item;
+        }
+
+        /**
+         * @param item the item to set
+         */
+        public void setItem(String item)
+        {
+            this.item = item;
+        }
+
+        /**
+         * @return the amount
+         */
+        public String getAmount()
+        {
+            return amount;
+        }
+
+        /**
+         * @param amount the amount to set
+         */
+        public void setAmount(String amount)
+        {
+            this.amount = amount;
+        }
+
+        /**
+         * @return the waiterID
+         */
+        public String getWaiterID()
+        {
+            return waiterID;
+        }
+
+        /**
+         * @param waiterID the waiterID to set
+         */
+        public void setWaiterID(String waiterID)
+        {
+            this.waiterID = waiterID;
+        }
+
+        /**
+         * @return the reason
+         */
+        public String getReason()
+        {
+            return reason;
+        }
+
+        /**
+         * @param reason the reason to set
+         */
+        public void setReason(String reason)
+        {
+            this.reason = reason;
+        }
+
+        /**
+         * @return the dateTime
+         */
+        public String getDateTime()
+        {
+            return dateTime;
+        }
+
+        /**
+         * @param dateTime the dateTime to set
+         */
+        public void setDateTime(String dateTime)
+        {
+            this.dateTime = dateTime;
+        }
+
+        public Object GetName()
+        {
+            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        }
+  
     }
     
     
@@ -53,12 +164,14 @@ public class Order implements Serializable
         {
             temp += food.GetPrice();
         }
-        for(Food merch : merch) //added for merch
+        for(Food food : merch) //added merch getPrice call
         {
-            temp += merch.GetPrice();
+            temp += food.GetPrice();
         }
         
         subTotal += temp;
+        subTotal -= compedItemTotal;
+       
     }
     
     public void calculateTax()
@@ -101,12 +214,12 @@ public class Order implements Serializable
     {
         this.drink.add(drink);
     }
-/*  //not needed anymore
+  /* //not needed.
     public ArrayList<Merch> getMerch()
     {
         return merch;
     }
-    
+    /* //not needed.
     public void addToMerch(Merch newItem)
     {
         merch.add(newItem);
@@ -116,7 +229,8 @@ public class Order implements Serializable
     {
         this.merch.add(newItem);
     }
-*/
+    */
+
     public void setFoodItem(Food foodItem)
     {
         this.foodItem.add(foodItem);
@@ -208,6 +322,7 @@ public class Order implements Serializable
     {
         return tax;
     }
+
     public void setWaiter(int i)
     {
         this.assignedWaiter = i;
@@ -217,4 +332,43 @@ public class Order implements Serializable
     {
         return this.assignedWaiter;
     }
+    
+    
+    /**
+     * @return the compedItems
+     */
+    public ArrayList<CompedItem> getCompedItems()
+    {
+        return compedItems;
+    }
+
+    /**
+     * @param compedItems the compedItems to set
+     */
+    public void setCompedItems(CompedItem compedItem)
+    {
+        this.compedItems.add(compedItem);
+    }
+    
+    public CompedItem createCompedItem(String item, String amount, String waiterID, String reason, String dateTime)
+    {
+        return new CompedItem(item, amount, waiterID, reason, dateTime);
+    }
+
+    /**
+     * @return the compedItemTotal
+     */
+    public double getCompedItemTotal()
+    {
+        return compedItemTotal;
+    }
+
+    /**
+     * @param compedItemTotal the compedItemTotal to set
+     */
+    public void setCompedItemTotal(double compedItemTotal)
+    {
+        this.compedItemTotal = compedItemTotal;
+    }
+    
 }
