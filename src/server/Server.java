@@ -309,6 +309,9 @@ public class Server
             
             try
             {
+                ObjOut.writeInt(WaiterID);
+                ObjOut.flush();
+                
                 while((Request = ObjIn.readUTF()) != null)
                 {
                     System.out.println(Request); // test
