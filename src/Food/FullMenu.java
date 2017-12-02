@@ -137,7 +137,7 @@ public class FullMenu implements Serializable
             {
                 System.out.println(Merchs.getItem(i).GetName());
                 System.out.println(Merchs.getItem(i).GetPrice());
-                System.out.println(Merchs.getItem(i).GetSize()); //This is an item size, not the list size.
+                //System.out.println(Merchs.getItem(i).GetSize()); //This is an item size, not the list size.
                 //since merch has no ingredients, we will omit Ingredients.
             }
                         
