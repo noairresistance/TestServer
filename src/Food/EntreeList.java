@@ -16,7 +16,9 @@ public class EntreeList
     Food entree1;
     Food entree2;
     Food entree3;
-    
+    Food entree4;
+    Food entree5;
+    Food entree6;
     
     public EntreeList()
     {
@@ -48,9 +50,21 @@ public class EntreeList
         entree3.SetIngredients("Pondks");
         entree3.SetIngredients("Mikuebnd");
         
+        entree4 = new Food("Kids Meal 1", "Food", "kidsmeal", 7.99, Boolean.TRUE, Boolean.FALSE);
+        entree4.SetDescription("4 Chicken fingers");
+        
+        entree5 = new Food("Kids Meal 2", "Food", "kidsmeal", 5.99, Boolean.TRUE, Boolean.FALSE);
+        entree5.SetDescription("Mac & Cheese");
+        
+        entree6 = new Food("Kids Meal 3", "Food", "kidsmeal", 6.99, Boolean.TRUE, Boolean.FALSE);
+        entree6.SetDescription("A yummy Chicken Sandwich");
+        
         entrees.add(entree1);
         entrees.add(entree2);
         entrees.add(entree3);
+        entrees.add(entree4);
+        entrees.add(entree5);
+        entrees.add(entree6);
     }
     
     
